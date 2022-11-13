@@ -18,10 +18,26 @@ import eq from '../lib/src/eq.js';
 import { expect } from 'chai';
 
 describe('#ceil()', function(){
-    context('with single argument', function(){
+    context('with single floating point argument', function(){
         it('should return the value rounded up to the nearest integer value', function(){
             expect(ceil(4.006)).to.equal(5);
         });
+        it('should return the value rounded up to the nearest integer value', function(){
+            expect(ceil(3.999)).to.equal(4);
+        });
+        it('should return the value rounded up to the nearest integer value', function(){
+            expect(ceil(4.000000001)).to.equal(5);
+        });
+
+        it('should return the negative value rounded up to nearest integer value', function(){
+            expect(ceil(-4.006)).to.equal(-4);
+        });
     });
+
+    context('with single integer argument', function(){
+        it('should return the value as it was', function(){
+            expect(ceil(0)).to.equal(0);
+        });
+    })
 });
 
