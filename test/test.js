@@ -16,6 +16,7 @@ import defaulttoany from '../lib/src/defaultToAny.js';
 import eq from '../lib/src/eq.js';
 /* Chai library for all the required asserting functions*/
 import { expect } from 'chai';
+import { describe } from 'mocha';
 
 describe('#ceil()', function(){
     context('with single floating point argument', function(){
@@ -39,5 +40,14 @@ describe('#ceil()', function(){
             expect(ceil(0)).to.equal(0);
         });
     })
+});
+
+describe('#divide()', function(){
+    context('with zero as the divisor', function(){
+        it('should return NaN', function(){
+            expect(divide(1, 0)).to.be.NaN;
+        })
+    })
+
 });
 
