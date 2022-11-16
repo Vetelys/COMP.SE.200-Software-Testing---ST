@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "nyc mocha --exit --timeout=10000",
-    "coveralls": "nyc report --reporter=lcov",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc report --reporter=lcovonly",
+    "coverage": "nyc report --reporter=html"
   },
   "repository": {
     "type": "git",
