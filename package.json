@@ -7,7 +7,7 @@
   "scripts": {
     "test": "nyc mocha --exit --timeout=10000",
     "coveralls": "nyc report --reporter=lcovonly",
-    "coverage": "nyc report --reporter=html"
+    "coverage": "nyc report --reporter=html --reporter=text-summary"
   },
   "repository": {
     "type": "git",
