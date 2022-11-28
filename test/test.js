@@ -44,7 +44,7 @@ describe('#ceil()', function(){
 });
 
 describe('#divide()', function(){
-    context('with zero as the divisor', function(){
+    /*context('with zero as the divisor', function(){
         it('should return NaN', function(){
             expect(divide(1, 0)).to.be.NaN;
         })
@@ -64,13 +64,30 @@ describe('#divide()', function(){
             assert.equal(divide(4,-2), -2);
         })
     });
-
+    */
     context('with negative divisor and dividen', function(){
         it('divide(-1,-1) should be equal to 1', function(){
             assert.equal(divide(-1,-1), 1);
         })
     });
-
-
 });
 
+describe('#eq()', function(){
+    const object = {'a':1};
+    const other = {'a':1};
+    it("eq(object, object) should be true", function() {
+        assert.isTrue(eq(object, object));
+    });
+    it("eq(object, other) should be false", function() {
+        assert.isFalse(eq(object, other));
+    });
+    it("rq('a', 'a') should be true", function() {
+        assert.isTrue(eq('a', 'a'));
+    });
+    it("eq('a', Object('a')) should be false", function() {
+        assert.isFalse(eq('a'), Object('a'));
+    });
+    it("eq(NaN, NaN) should be true", function() {
+        assert.isTrue(eq(NaN, NaN));
+    });
+});
