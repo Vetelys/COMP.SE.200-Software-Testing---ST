@@ -112,3 +112,12 @@ describe('#add()', function(){
         assert.equal(add(40000000, 60000000), 100000000);
     });
 });
+
+describe("#upperfirst()", function() {
+    it("upperFirst('fred') should be equal to 'Fred'", function() {
+        assert.equal(upperfirst('fred'), 'Fred');
+    });
+    it("upperFirst('FRED') should be equal to 'FRED'", function() {
+        assert.equal(upperfirst('FRED'), 'FRED');
+    });
+});
