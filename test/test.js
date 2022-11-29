@@ -113,11 +113,41 @@ describe('#add()', function(){
     });
 });
 
-describe("#upperfirst()", function() {
+describe("#upperFirst()", function() {
     it("upperFirst('fred') should be equal to 'Fred'", function() {
         assert.equal(upperfirst('fred'), 'Fred');
     });
     it("upperFirst('FRED') should be equal to 'FRED'", function() {
         assert.equal(upperfirst('FRED'), 'FRED');
     });
+});
+
+describe("#isEmpty()", function(){
+    it('isEmpty(null) should be equal to true', function(){
+        assert.equal(isempty(null), true)
+    });
+    it('isEmpty(true) should be equal to true', function(){
+        assert.equal(isempty(true), true)
+    });
+    it('isEmpty(1) should be equal to true', function(){
+        assert.equal(isempty(1), true)
+    });
+    it('isEmpty([1,2,3] should be equal to false', function(){
+        assert.equal(isempty([1,2,3]), false)
+    });
+    it("isEmpty('abc') should be equal to false", function(){
+        assert.equal(isempty('abc'), false)
+    });
+});
+
+describe('#isLenght()', function(){
+    it('isLenght(3) should be equal to true', function(){
+        assert.equal(islength(3), true)
+    });
+    it('isLenght(Number.MIN_VALUE) should be equal to false', function(){
+        assert.equal(islength(Number.MIN_VALUE), false)
+    });
+    it('isLenght("aaaaa") should be equal to false', function(){
+        assert.equal(islength('aaaaa'), false)
+    })
 });
