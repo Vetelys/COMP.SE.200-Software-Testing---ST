@@ -149,5 +149,41 @@ describe('#isLenght()', function(){
     });
     it('isLenght("aaaaa") should be equal to false', function(){
         assert.equal(islength('aaaaa'), false)
-    })
+    });
+});
+
+describe('#get()', function(){
+    const object = {'a': [{'b': {'c':3}}]}
+    it("get(object, 'a[0].b.c') should be equal to 3", function(){
+        assert.equal(get(object, 'a[0].b.c'), 3)
+    });
+    it("get(object, ['a', '0', 'b', 'c']) should be equal to 3", function(){
+        assert.equal(get(object, ['a', '0', 'b', 'c']), 3)
+    });
+    it("get(object, 'a.b.c', 'default') should be equal to 'default' ", function(){
+        assert.equal(get(object, 'a.b.c', 'default'), 'default')
+    });
+});
+
+describe('#defaultToAny()', function(){
+    it("Should return firs value which is not 'NaN', 'null' or 'undefined'", function(){
+        assert.equal(defaulttoany(undefined, null, NaN), NaN)
+    });
+    it("defaulttoany(1,2,3) should be equal to 3", function(){
+        assert.equal(defaulttoany(1,2,3), 1)
+    });
+    it("defaulttoany(undefined, null, -1)) should be equal to -1", function(){
+        assert.equal(defaulttoany(undefined, null, -1), -1)
+    });
+});
+
+describe('#words()', function(){
+    const object = 'fred, barney, & pebbles';
+    const other = ['fred', 'barney', 'pebbles'];
+    it("words('fred, barney, & pebbles') should be equal to ['fred', 'barney', 'pebbles']", function(){
+        assert.equal(words(object), other)
+    });
+    it("words('fred, barney, & pebbles', /[^, ]+/g) should be equal to ['fred', 'barney', '&', 'pebbles']", function(){
+        assert.equal(words('fred, barney, & pebbles', /[^, ]+/g), ['fred', 'barney', '&', 'pebbles'])
+    });
 });
