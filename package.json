@@ -2,12 +2,12 @@
   "name": "tests",
   "version": "1.0.0",
   "description": "Unit tests for COMP.SE.200-2022-2023-1 Software Testing Assignment part 2",
-  "main": "tests.js",
+  "main": "../test/test.js",
   "type": "module",
   "scripts": {
-    "test": "nyc mocha --exit --timeout=10000",
-    "coveralls": "nyc report --reporter=lcovonly",
-    "coverage": "nyc report --reporter=html --reporter=text-summary"
+    "test": "mocha --timeout=10000",
+    "coveralls": "c8 npm test --reporter=lcovonly",
+    "coverage": "c8 npm test --reporter=html --reporter=text-summary"
   },
   "repository": {
     "type": "git",
@@ -20,27 +20,29 @@
   },
   "homepage": "https://github.com/Vetelys/COMP.SE.200-Software-Testing---ST#readme",
   "dependencies": {
+    "c8": "^7.12.0",
     "debug": "^4.3.4",
     "mocha": "^10.1.0"
   },
   "devDependencies": {
-    "chai": "^4.3.7",
-    "coveralls": "^3.1.1",
-    "mocha-lcov-reporter": "^1.3.0",
-    "nyc": "^15.1.0"
+    "chai": "^4.3.7"
   },
   "directories": {
     "lib": "./lib",
     "tests": "./Tests"
   },
-  "nyc": {
-    "all": true,
-    "check-coverage": "false",
+  "c8": {
     "include": [
-      "lib/src/*.js"
-    ],
-    "exclude": [
-      "lib/src/.internal/**"
+      "lib/src/ceil.js",
+      "lib/src/words.js",
+      "lib/src/isLength.js",
+      "lib/src/upperFirst.js",
+      "lib/src/add.js",
+      "lib/src/divide.js",
+      "lib/src/isEmpty.js",
+      "lib/src/get.js",
+      "lib/src/eq.js",
+      "lib/src/defaultToAny.js"
     ],
     "report-dir": "./coverage"
   }
