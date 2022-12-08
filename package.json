@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "mocha --timeout=10000",
-    "coveralls": "c8 npm test --reporter=lcovonly",
-    "coverage": "c8 npm test --reporter=html --reporter=text-summary"
+    "coveralls": "c8 --reporter=lcovonly npm test ",
+    "coverage": "c8 --reporter=html --reporter=text-summary npm test"
   },
   "repository": {
     "type": "git",
