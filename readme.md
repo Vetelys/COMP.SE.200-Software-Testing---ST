@@ -6,11 +6,7 @@
 
 npm install --save mocha chai
 
-npm install --save coveralls
-
-npm install --save mocha-lcov-reporter
-
-npm install --save nyc
+npm install --save c8
 
 npm run test
 
