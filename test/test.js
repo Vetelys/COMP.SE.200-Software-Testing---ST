@@ -25,31 +25,43 @@ import { describe } from 'mocha';
 
 describe('Unit tests for the chosen 10 functions', () => {
     describe('#ceil()', function(){
-        context('with single floating point argument', function(){
-            it('should return the value rounded up to the nearest integer value', function(){
-                const result = ceil(4.0006);
-                expect(result).to.equal(5);
+        context('with single floating point argument, should return the value rounded up to the nearest integer value', function(){
+            it('ceil(4.0006) should return 5', function(){
+                expect(ceil(4.0006)).to.equal(5);
             });
-            it('should return the value rounded up to the nearest integer value', function(){
-                expect(ceil(3.999)).to.equal(4);
+            it('ceil(3.9999) should return 4', function(){
+                expect(ceil(3.9999)).to.equal(4);
             });
-            it('should return the value rounded up to the nearest integer value', function(){
+            it('ceil(4.000000001) should return 5', function(){
                 expect(ceil(4.000000001)).to.equal(5);
             });
-
-            it('should return the negative value rounded up to nearest integer value', function(){
-                expect(ceil(-4.006)).to.equal(-4);
+            it('ceil(-4.0006) should return -4', function(){
+                expect(ceil(-4.0006)).to.equal(-4);
             });
+            it('ceil(1.00) should return 1', function(){
+                expect(ceil(1.00)).to.equal(1);
+            })
+            it('ceil(-1.00) should return -1', function(){
+                expect(ceil(1.00)).to.equal(1);
+            })
         });
 
-        context('with single integer argument', function(){
-            it('should return the value as it was', function(){
+        context('with single integer argument, should return the value as it was', function(){
+            it('ceil(0) should return 0', function(){
                 expect(ceil(0)).to.equal(0);
+            });
+
+            it('ceil(1) should return 1', function(){
+                expect(ceil(1)).to.equal(1);
+            });
+
+            it('ceil(-1) should return -1', function(){
+                expect(ceil(-1)).to.equal(-1);
             });
         })
     });
 
-
+    //tests are skipped until the bug is fixed
     describe.skip('#divide()', function(){
         context('with zero as the divisor', function(){
             it('should return NaN', function(){
@@ -57,7 +69,7 @@ describe('Unit tests for the chosen 10 functions', () => {
             })
         });
 
-        context('with positive as the divisor', function(){
+        context('with positive integer as the divisor', function(){
             it('divide(6, 4) should be equal to 1.5', function() {
                 assert.equal(divide(6, 4), 1.5);
             });
@@ -67,13 +79,31 @@ describe('Unit tests for the chosen 10 functions', () => {
         });
 
         context('with positive as the divisor and negative dividen', function(){
-            it('divide(4,-2) should be equal to -2', function(){
-                assert.equal(divide(4,-2), -2);
+            it('divide(4, -2) should be equal to -2', function(){
+                assert.equal(divide(4, -2), -2);
+            })
+
+            it('divide(1, -1) should be equal to -1', function(){
+                assert.equal(divide(1, -1), -2);
+            })
+
+            it('divide(3, -2) should be equal to -1.5', function(){
+                assert.equal(divide(3, -2), -1.5);
+            })
+        });
+
+        context('with negative divisor and positive dividen', function(){
+            it('divide(-4, 2) should be equal to -2', function(){
+                assert.equal(divide(-4, 2), -2);
+            })
+
+            it('divide(-1, 1) should be equal to -1', function(){
+                assert.equal(divide(-1, 1), -2);
             })
         });
         
-        context('with negative divisor and dividen', function(){
-            it('divide(-1,-1) should be equal to 1', function(){
+        context('with negative divisor and negative dividen', function(){
+            it('divide(-1, -1) should be equal to 1', function(){
                 assert.equal(divide(-1,-1), 1);
             })
         });
@@ -82,23 +112,61 @@ describe('Unit tests for the chosen 10 functions', () => {
 
 
     describe('#eq()', function(){
-        const object = {'a':1};
-        const other = {'a':1};
-        it("eq(object, object) should be true", function() {
-            assert.isTrue(eq(object, object));
+        const object = {'a': 1};
+        const other = {'a': 1};
+        const objectWithMoreProperties = {'a': 1, 'b': 1};
+        const another = {'a': 2};
+        const yetAnother = {'b': 2};
+        
+        context('Using the same object twice', function(){
+            it("eq(object, object) should be true", function() {
+                assert.isTrue(eq(object, object));
+            });
         });
-        it("eq(object, other) should be false", function() {
-            assert.isFalse(eq(object, other));
-        });
-        it("rq('a', 'a') should be true", function() {
-            assert.isTrue(eq('a', 'a'));
-        });
-        it("eq('a', Object('a')) should be false", function() {
-            assert.isFalse(eq('a'), Object('a'));
-        });
-        it("eq(NaN, NaN) should be true", function() {
-            assert.isTrue(eq(NaN, NaN));
-        });
+        context('Using two objects with the same keys and values', function(){
+            it("eq(object, other) should be false", function() {
+                assert.isFalse(eq(object, other));
+            });
+        })
+        context('Using two objects with the other having additional properties', function(){
+            it("eq(object, objectWithMoreProperties) should return false", function(){
+                assert.isFalse(eq(object, objectWithMoreProperties));
+                assert.isFalse(eq(objectWithMoreProperties, object));
+            })
+        })
+        context('Using two objects with the same key but different value', function(){
+            it("eq(another, object) should be false", function() {
+                assert.isFalse(eq(another, object));
+            });
+            it("eq(other, another) should be false", function() {
+                assert.isFalse(eq(object, another));
+            });
+        })
+
+        context('Using two objects with the same value but different key', function(){
+            it("eq(another, yetAnother) should be false", function() {
+                assert.isFalse(eq(another, yetAnother));
+            });
+            it("eq(yetAnother, another) should be false", function() {
+                assert.isFalse(eq(yetAnother, another));
+            });
+        })
+
+        context('Comparing strings to another string or object', function(){
+            it("eq('a', 'a') should be true", function() {
+                assert.isTrue(eq('a', 'a'));
+            });
+            it("eq('a', Object('a')) should be false", function() {
+                assert.isFalse(eq('a'), Object('a'));
+            });
+
+        })
+
+        context('Using two NaN\'s', function(){
+            it("eq(NaN, NaN) should be true", function() {
+                assert.isTrue(eq(NaN, NaN));
+            });
+        })
     });
 
 
