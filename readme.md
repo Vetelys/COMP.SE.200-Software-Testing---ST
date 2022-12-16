@@ -2,12 +2,12 @@
 
 # Unit tests for assignment part 2
 
-## How to run tests v0.1
+## How to run tests
 
 npm install --save mocha chai
 
 npm install --save c8
 
-npm run test
+npm run test -- run all the unit tests
 
-npm run coverage
+npm run coverage -- run all the units tests, show text summary for coverage, generate coverage html files inside '/coverage' folder.
