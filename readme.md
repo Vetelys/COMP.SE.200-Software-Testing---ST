@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/Vetelys/COMP.SE.200-Software-Testing---ST/badge.svg?branch=main)](https://coveralls.io/github/Vetelys/COMP.SE.200-Software-Testing---ST?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/Vetelys/COMP.SE.200-Software-Testing---ST/badge.svg)](https://coveralls.io/github/Vetelys/COMP.SE.200-Software-Testing---ST)
 
 # Unit tests for assignment part 2
 
