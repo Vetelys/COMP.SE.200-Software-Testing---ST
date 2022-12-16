@@ -62,7 +62,7 @@ describe('Unit tests for the chosen 10 functions', () => {
     });
 
     //tests are skipped until the bug is fixed
-    describe.skip('#divide()', function(){
+    describe('#divide()', function(){
         context('with zero as the divisor', function(){
             it('should return NaN', function(){
                 expect(divide(1, 0)).to.be.NaN;
@@ -190,6 +190,14 @@ describe('Unit tests for the chosen 10 functions', () => {
         it('add(40000000, 60000000) should not crash', function() {
             assert.equal(add(40000000, 60000000), 100000000);
         });
+        const maxSafeAdded = (Number.MAX_SAFE_INTEGER)/2
+        it('add(Number.MAX_SAFE_INTEGER/2, Number.MAX_SAFE_INTEGER/2) should equal to Number.MAX_SAFE_INTEGER', function() {
+            assert.equal(add(maxSafeAdded, maxSafeAdded), Number.MAX_SAFE_INTEGER);
+        });
+
+        it('add(Number.MIN_VALUE, Number.MIN_VALUE) should equal to 2*Number.MIN_VALUE', function() {
+            assert.equal(add(Number.MIN_VALUE, Number.MIN_VALUE), Number.MIN_VALUE*2);
+        });
     });
 
 
@@ -200,6 +208,21 @@ describe('Unit tests for the chosen 10 functions', () => {
         });
         it("upperFirst('FRED') should be equal to 'FRED'", function() {
             assert.equal(upperfirst('FRED'), 'FRED');
+        });
+        it("upperFirst('Fred') should be equal to 'Fred'", function() {
+            assert.equal(upperfirst('Fred'), 'Fred');
+        });
+        it("upperFirst('FreD') should be equal to 'FreD'", function() {
+            assert.equal(upperfirst('FreD'), 'FreD');
+        });
+        it("upperFirst('freD') should be equal to 'FreD'", function() {
+            assert.equal(upperfirst('freD'), 'FreD');
+        });
+        it("upperFirst('1') should be equal to '1'", function() {
+            assert.equal(upperfirst('1'), '1');
+        });
+        it("upperFirst('#') should be equal to '#'", function() {
+            assert.equal(upperfirst('#'), '#');
         });
     });
 
@@ -224,19 +247,52 @@ describe('Unit tests for the chosen 10 functions', () => {
         it("isEmpty({ 'a': 1 }) should be equal to false", function(){
             assert.equal(isempty({ 'a': 1 }), false)
         });
+        const emptyMap = new Map();
+        const map = new Map();
+        map.set('bar', 'foo');
+        it("isEmpty(Map) should be equal to true if map is empty", function(){
+            assert.equal(isempty(emptyMap), true)
+        });
+
+        it("isEmpty(Map) should be equal to false if map has elements", function(){
+            assert.equal(isempty(map), false)
+        });
+
+        const emptySet = new Set();
+        const set = new Set();
+        set.add('bar');
+        it("isEmpty(Set) should be equal to true if set is empty", function(){
+            assert.equal(isempty(emptySet), true)
+        });
+
+        it("isEmpty(Set) should be equal to false if set has elements", function(){
+            assert.equal(isempty(set), false)
+        });
     });
 
 
 
     describe('#isLenght()', function(){
+        it('isLenght(0) should be equal to true', function(){
+            assert.equal(islength(0), true)
+        });
+        it('isLenght(-1) should be equal to false', function(){
+            assert.equal(islength(-1), false)
+        });
         it('isLenght(3) should be equal to true', function(){
             assert.equal(islength(3), true)
         });
         it('isLenght(Number.MIN_VALUE) should be equal to false', function(){
             assert.equal(islength(Number.MIN_VALUE), false)
         });
+        it('isLenght(Number.MAX_SAFE_INTEGER) should be equal to true', function(){
+            assert.equal(islength(Number.MAX_SAFE_INTEGER), true)
+        });
         it('isLenght("aaaaa") should be equal to false', function(){
             assert.equal(islength('aaaaa'), false)
+        });
+        it('isLenght("Infinity") should be equal to false', function(){
+            assert.equal(islength(Infinity), false)
         });
     });
 
@@ -253,19 +309,25 @@ describe('Unit tests for the chosen 10 functions', () => {
         it("get(object, 'a.b.c', 'default') should be equal to 'default' ", function(){
             assert.equal(get(object, 'a.b.c', 'default'), 'default')
         });
+        it("get(object, 'c.b.a') should be equal to 'undefined' when no default is given", function(){
+            assert.equal(get(object, 'c.b.a'), undefined)
+        });
     });
 
 
 
     describe('#defaultToAny()', function(){
-        it("Should return firs value which is not 'NaN', 'null' or 'undefined'", function(){
+        it("Should return first value which is not 'NaN', 'null' or 'undefined'", function(){
             expect(defaulttoany(undefined, null, NaN)).to.be.NaN
         });
         it("defaulttoany(1,2,3) should be equal to 3", function(){
             assert.equal(defaulttoany(1,2,3), 1)
         });
-        it("defaulttoany(undefined, null, -1)) should be equal to -1", function(){
+        it("defaulttoany(undefined, null, -1) should be equal to -1", function(){
             assert.equal(defaulttoany(undefined, null, -1), -1)
+        });
+        it("defaulttoany() should be equal to undefined", function(){
+            assert.equal(defaulttoany(), undefined)
         });
     });
 
@@ -279,6 +341,18 @@ describe('Unit tests for the chosen 10 functions', () => {
         });
         it("words('fred, barney, & pebbles', /[^, ]+/g) should be equal to ['fred', 'barney', '&', 'pebbles']", function(){
             assert.deepEqual(words('fred, barney, & pebbles', /[^, ]+/g), ['fred', 'barney', '&', 'pebbles'])
+        });
+        it("words('fred-barney-&-pebbles', /[^-]+/g) should be equal to ['fred', 'barney', '&', 'pebbles']", function(){
+            assert.deepEqual(words('fred-barney-&-pebbles', /[^-]+/g), ['fred', 'barney','&', 'pebbles'])
+        });
+        it("words('fred, barney, & pebbles', /[^f]+/g) should be equal to ['red, barney, & pebbles']", function(){
+            assert.deepEqual(words('fred, barney, & pebbles', /[^f]+/g), ['red, barney, & pebbles'])
+        });
+        it("words('fred, barney, & pebbles', /[^&]+/g) should be equal to ['fred, barney, ', ' pebbles']", function(){
+            assert.deepEqual(words('fred, barney, & pebbles', /[^&]+/g), ['fred, barney, ', ' pebbles'])
+        });
+        it("words('') should be equal to []", function(){
+            assert.deepEqual(words(''), [])
         });
     });
 });
